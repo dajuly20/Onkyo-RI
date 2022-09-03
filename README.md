@@ -22,6 +22,7 @@ sudo python3 setup.py install
 ## Connection
 To connect to the RI port is used 3.5mm mono jack. Tip is for data signal and sleeve is ground (GND). Data are sent via TTL logic. So it is easy to connect RI device to 5V MCU (Arduino). Just connect data signal to some output pin and connect GND between each other. In case of stereo jack, connect tip to DATA, sleeve and ring to GND.  
 
+
 ## Protocol
 Protocol description could be found at:
 *    http://lirc.sourceforge.net/remotes/onkyo/Remote_Interactive
