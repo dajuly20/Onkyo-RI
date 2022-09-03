@@ -20,6 +20,7 @@ Then execute setup with
 ```
 sudo python3 setup.py build
 sudo python3 setup.py install
+sudo pigpiod
 ```
 
 To test if all works execute
