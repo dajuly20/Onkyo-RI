@@ -71,6 +71,7 @@ At mentioned sites are also listed codes for Onkyo devices. Unfortunnately none 
   <tr><td>Dimmer Lo</td><td>0x2BF</td><td>Set dimmer brightness to lowest level</td></tr>    
   <tr><td>Turn Off</td><td>0x1AE</td><td>Turn OFF(set into standby) receiver</td></tr>  
   <tr><td>Test mode</td><td>0x421 - 0x424</td><td>Some kind of test modes. Leave test mode is possible by code 0x420 (Turn Off). Test modes provides clear of receiver setting.</td></tr>
+  <tr><td>Switch to Radio</td><td>0x423</td><td>Switch to FB</td></tr>  
   <tr><td>Radio search next</td><td>0x430</td><td>Tune next radio station when radio is selected.</td></tr>  
   <tr><td>Radio search previous</td><td>0x431</td><td>Tune previous radio station when radio is selected.</td></tr>  
   <tr><td>Radio Stereo/Mono</td><td>0x432</td><td>Switch between Stereo and Mono when FM radio is selected.</td></tr>  
