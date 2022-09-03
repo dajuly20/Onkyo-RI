@@ -7,6 +7,17 @@ Control Onkyo devices is possible among others through Remote Interactive port. 
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/docbender/Onkyo-RI.svg)](http://isitmaintained.com/project/docbender/Onkyo-RI "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/docbender/Onkyo-RI.svg)](http://isitmaintained.com/project/docbender/Onkyo-RI "Percentage of issues still open")
 
+## First steps
+```
+sudo apt-get install python3-pip
+pip3 install -U pip setuptools 
+```
+Then execute setup with 
+
+```
+sudo python3 setup.py build
+sudo python3 setup.py install
+```
 
 ## Connection
 To connect to the RI port is used 3.5mm mono jack. Tip is for data signal and sleeve is ground (GND). Data are sent via TTL logic. So it is easy to connect RI device to 5V MCU (Arduino). Just connect data signal to some output pin and connect GND between each other. In case of stereo jack, connect tip to DATA, sleeve and ring to GND.  
