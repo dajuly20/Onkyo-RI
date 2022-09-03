@@ -20,7 +20,7 @@ sudo python3 setup.py install
 ```
 
 ## Connection
-To connect to the RI port is used 3.5mm mono jack. Tip is for data signal and sleeve is ground (GND). Data are sent via TTL logic. So it is easy to connect RI device to 5V MCU (Arduino). Just connect data signal to some output pin and connect GND between each other. In case of stereo jack, connect tip to DATA, sleeve and ring to GND.  That means for a Rasperry Pi 3 to put the tip to Pin 8 (Tx) and the shield to Pin 7 (Gnd)
+To connect to the RI port is used 3.5mm mono jack. Tip is for data signal and sleeve is ground (GND). Data are sent via TTL logic. So it is easy to connect RI device to 5V MCU (Arduino). Just connect data signal to some output pin and connect GND between each other. In case of stereo jack, connect tip to DATA, sleeve and ring to GND.  That means for a Rasperry Pi 3 to put the tip to Pin 8 (Tx) and the shield to Pin 6 (Gnd)
 
 ![Pi3 Pinout](pi3pinout.svg)
 
