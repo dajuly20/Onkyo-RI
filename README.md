@@ -11,6 +11,7 @@ Control Onkyo devices is possible among others through Remote Interactive port. 
 ```
 sudo apt-get install python3-pip
 pip3 install -U pip setuptools 
+pip3 install pigpio
 ```
 Then execute setup with 
 
@@ -18,6 +19,11 @@ Then execute setup with
 sudo python3 setup.py build
 sudo python3 setup.py install
 ```
+
+To test if all works execute
+```
+cd onkyo-rpi
+python3 main.py 
 
 ## Connection
 To connect to the RI port is used 3.5mm mono jack. Tip is for data signal and sleeve is ground (GND). Data are sent via TTL logic. So it is easy to connect RI device to 5V MCU (Arduino). Just connect data signal to some output pin and connect GND between each other. In case of stereo jack, connect tip to DATA, sleeve and ring to GND.  That means for a Rasperry Pi 3 to put the tip to Pin 8 (Tx) and the shield to Pin 6 (Gnd)
