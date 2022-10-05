@@ -12,7 +12,8 @@
 //
 //---------------------------------------------------------------------------
 
-#include "Arduino.h"
+
+#include <wiringPi.h>
 #include "OnkyoRI.h"
 
 /// send command message to device

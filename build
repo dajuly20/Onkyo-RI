@@ -1,0 +1,2 @@
+#!/bin/bash
+g++ *.cpp Onkyo_send_blocking/*.cpp  -o onkyoricli -lwiringPi
