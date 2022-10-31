@@ -8,12 +8,12 @@
 //
 //---------------------------------------------------------------------------
 
-#include "Arduino.h"
+#include "wiringPi.h"
 
 // UART
 #define UART_SPEED  9600
 // ONKYO
-#define ONKYO_PIN 10
+#define ONKYO_PIN 22
 
 int i=0;
 bool pause = 0;
