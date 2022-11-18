@@ -1,5 +1,5 @@
 # What is OnkyoRi anyway? 
-If you have an Onyko Receiver or any other Onkyo hardware, you might find a 3.5mm jack plug on the back. When you connect it to another Onky device, you will be able to use the same remote for all Devices. Someone on the internet decoed the protol and and enabled us, to use this interface e.g. via a rasperry pi. My usecase is, to feed "this" by NodeRed / Alexa. So I can enable voice control for legacy hardware. 
+If you have an Onyko Receiver or any other Onkyo hardware, you might find a 3.5mm jack plug on the back. When you connect it to another Onky device, you will be able to use the same remote for all devices. Someone on the internet decoed the protol and and enabled us, to use this interface e.g. via a Rasperry Pi. My usecase is, to feed "this" by NodeRed / Alexa. So I can enable voice control for legacy hardware. 
 ![OnkyoRi Port](./img/onkyorihw.png)
 
 
