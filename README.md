@@ -1,27 +1,26 @@
-# Onkyo-RI
-Control Onkyo devices is possible among others through Remote Interactive port. This port is normally used for direct communication between two Onkyo devices (ex. receiver and CD player). But why not turn on the receiver automatically when you start your own player?
+# What is OnkyoRi anyway? 
+If you have an Onyko Receiver or any other Onkyo hardware, you might find a 3.5mm jack plug on the back. When you connect it to another Onky device, you will be able to use the same remote for all Devices. Someone on the internet decoed the protol and and enabled us, to use this interface e.g. via a rasperry pi. My usecase is, to feed "this" by NodeRed / Alexa. So I can enable voice control for legacy hardware. 
 
-[![License](https://img.shields.io/github/license/docbender/Onkyo-RI)](https://github.com/docbender/Onkyo-RI)
-[![Stars](https://img.shields.io/github/stars/docbender/Onkyo-RI)](https://github.com/docbender/Onkyo-RI)
-[![Issues](https://img.shields.io/github/issues/docbender/Onkyo-RI)](https://github.com/docbender/Onkyo-RI/issues)
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/docbender/Onkyo-RI.svg)](http://isitmaintained.com/project/docbender/Onkyo-RI "Average time to resolve an issue")
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/docbender/Onkyo-RI.svg)](http://isitmaintained.com/project/docbender/Onkyo-RI "Percentage of issues still open")
+# Onkyo-RI-RasperryPi
+First of all ... I was myself confused wich approach to choose. There are Python approaches, but I found them kind of slow. This is why i foreked docbender's Onkyo-ri aproach which is in C++ - for use with RasperryPi using WiringPi.
+
+https://github.com/ahaack/onkyo-rpi
 
 ## First steps
-```
-sudo apt-get install python3-pip
-pip3 install -U pip setuptools 
-```
-Then execute setup with 
 
-```
-sudo python3 setup.py build
-sudo python3 setup.py install
-```
+## Software
+clone :)
+execute build with ./build  (I haven't worked with C++ for a while, MR for Makefile welcome :D ) 
 
-## Connection
-To connect to the RI port is used 3.5mm mono jack. Tip is for data signal and sleeve is ground (GND). Data are sent via TTL logic. So it is easy to connect RI device to 5V MCU (Arduino). Just connect data signal to some output pin and connect GND between each other. In case of stereo jack, connect tip to DATA, sleeve and ring to GND.  
 
+
+
+## Hardware Connection
+To connect to the RI port is used 3.5mm mono jack. Tip is for data signal and sleeve is ground (GND). Data are sent via TTL logic. So it is easy to connect RI device to 5V MCU (Arduino). Just connect data signal to some output pin and connect GND between each other. In case of stereo jack, connect tip to DATA, sleeve and ring to GND.  That means for a Rasperry Pi 3 to put the tip to Pin 22 (GPIO_GEN6) GPIO25 (tx) and the shield to Pin 20 or another ground  (Gnd)
+
+
+
+![Pi3 Pinout](pi3pinout.svg)
 
 ## Protocol
 Protocol description could be found at:
@@ -39,6 +38,37 @@ There are two Onkyo-RI library:
 
 ## RI codes
 At mentioned sites are also listed codes for Onkyo devices. Unfortunnately none of the codes is not valid for my receiver TX-8020. To determine the valid codes I wrote a simple loop for Arduino (more below) that goes through the whole 12bit code range (0x0-0xFFF). Results are listed below commands.
+
+### TX-SR605
+<table>
+  <tr><td><b>Action</b></td><td><b>Command</b></td><td><b>Notes</b></td></tr>
+  <tr><td>Input CD</td><td>0x20</td><td>Switch input to CD channel</td></tr>
+  <tr><td>Turn On + CD</td><td>0x2F</td><td>Turn ON receiver and select CD as input channel</td></tr>
+  <tr><td>Input TAPE</td><td>0x70</td><td>Switch input to TAPE channel</td></tr>
+  <tr><td>Turn On + TAPE</td><td>0x7F</td><td>Turn ON receiver and select TAPE as input channel</td></tr>
+  <tr><td>Input DVD</td><td>0x120</td><td>Switch input to DVD channel</td></tr>
+  <tr><td>Turn On + DVD</td><td>0x12F</td><td>Turn ON receiver and select DVD as input channel</td></tr>
+  <tr><td>Input DOCK</td><td>0x170</td><td>Switch input to DOCK channel</td></tr>
+  <tr><td>Turn On + DOCK</td><td>0x17F</td><td>Turn ON receiver and select DOCK as input channel</td></tr>  
+  <tr><td>Dimmer Hi</td><td>0x2B0</td><td>Set dimmer brightness to highest level</td></tr>
+  <tr><td>Dimmer Mid</td><td>0x2B1</td><td>Set dimmer brightness to mid level</td></tr>  
+  <tr><td>Dimmer Lo</td><td>0x2B2</td><td>Set dimmer brightness to lowest level</td></tr>  
+  <tr><td>Dimmer Hi</td><td>0x2B8</td><td>Set dimmer brightness to highest level</td></tr>
+  <tr><td>Dimmer Lo</td><td>0x2BF</td><td>Set dimmer brightness to lowest level</td></tr>    
+  <tr><td>Turn Off</td><td>0x1AE</td><td>Turn OFF(set into standby) receiver</td></tr>  
+  <tr><td>Test mode</td><td>0x421 - 0x424</td><td>Some kind of test modes. Leave test mode is possible by code 0x420 (Turn Off). Test modes provides clear of receiver setting.</td></tr>
+  <tr><td>Switch to Radio</td><td>0x423</td><td>Switch to FB</td></tr>  
+  <tr><td>Radio search next</td><td>0x430</td><td>Tune next radio station when radio is selected.</td></tr>  
+  <tr><td>Radio search previous</td><td>0x431</td><td>Tune previous radio station when radio is selected.</td></tr>  
+  <tr><td>Radio Stereo/Mono</td><td>0x432</td><td>Switch between Stereo and Mono when FM radio is selected.</td></tr>  
+  <tr><td>Radio station next</td><td>0x433</td><td>Jump to next stored radio station when radio is selected.</td></tr>  
+  <tr><td>Radio station previous</td><td>0x434</td><td>Jump to previous stored radio station when radio is selected.</td></tr>
+  
+  <tr><td>Vol Up</td><td>0x1A2</td><td>Volume Up (only when input is set to Video 3)</td></tr>
+  <tr><td>Vol Down</td><td>0x1A3</td><td>Volume Down (only when input is set to Video 3)</td></tr>
+  <tr><td>Mute</td><td>0x1A4</td><td>Mute (only when input is set to Video 3)</td></tr>
+</table>
+
 
 ### TX-8020 receiver 
 Codes are valid for TX-8020 receiver. With a high probability it will work with other Onkyo receivers.
