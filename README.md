@@ -1,5 +1,8 @@
 # What is OnkyoRi anyway? 
 If you have an Onyko Receiver or any other Onkyo hardware, you might find a 3.5mm jack plug on the back. When you connect it to another Onky device, you will be able to use the same remote for all Devices. Someone on the internet decoed the protol and and enabled us, to use this interface e.g. via a rasperry pi. My usecase is, to feed "this" by NodeRed / Alexa. So I can enable voice control for legacy hardware. 
+![OnkyoRi Port](./img/onkyorihw.png)
+
+
 
 # Onkyo-RI-RasperryPi
 First of all ... I was myself confused wich approach to choose. There are Python approaches, but I found them kind of slow. This is why i foreked docbender's Onkyo-ri aproach which is in C++ - for use with RasperryPi using WiringPi.
@@ -20,7 +23,7 @@ To connect to the RI port is used 3.5mm mono jack. Tip is for data signal and sl
 
 
 
-![Pi3 Pinout](pi3pinout.svg)
+![Pi3 Pinout](./img/pi3pinout.svg)
 
 ## Protocol
 Protocol description could be found at:
