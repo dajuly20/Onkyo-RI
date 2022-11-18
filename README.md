@@ -1,35 +1,21 @@
-# Onkyo-RI
-Control Onkyo devices is possible among others through Remote Interactive port. This port is normally used for direct communication between two Onkyo devices (ex. receiver and CD player). But why not turn on the receiver automatically when you start your own player?
+# What is OnkyoRi anyway? 
+If you have an Onyko Receiver or any other Onkyo hardware, you might find a 3.5mm jack plug on the back. When you connect it to another Onky device, you will be able to use the same remote for all Devices. Someone on the internet decoed the protol and and enabled us, to use this interface e.g. via a rasperry pi. My usecase is, to feed "this" by NodeRed / Alexa. So I can enable voice control for legacy hardware. 
+
+# Onkyo-RI-RasperryPi
+First of all ... I was myself confused wich approach to choose. There are Python approaches, but I found them kind of slow. This is why i foreked docbender's Onkyo-ri aproach which is in C++ - for use with RasperryPi using WiringPi.
 
 https://github.com/ahaack/onkyo-rpi
 
-[![License](https://img.shields.io/github/license/docbender/Onkyo-RI)](https://github.com/docbender/Onkyo-RI)
-[![Stars](https://img.shields.io/github/stars/docbender/Onkyo-RI)](https://github.com/docbender/Onkyo-RI)
-[![Issues](https://img.shields.io/github/issues/docbender/Onkyo-RI)](https://github.com/docbender/Onkyo-RI/issues)
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/docbender/Onkyo-RI.svg)](http://isitmaintained.com/project/docbender/Onkyo-RI "Average time to resolve an issue")
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/docbender/Onkyo-RI.svg)](http://isitmaintained.com/project/docbender/Onkyo-RI "Percentage of issues still open")
-
 ## First steps
-```
-sudo apt-get install python3-pip
-pip3 install -U pip setuptools 
-pip3 install pigpio
-```
-Then execute setup with 
 
-```
-sudo python3 setup.py build
-sudo python3 setup.py install
-sudo pigpiod
-```
+## Software
+clone :)
+execute build with ./build  (I haven't worked with C++ for a while, MR for Makefile welcome :D ) 
 
-To test if all works execute
-```
-cd onkyo-rpi
-python3 main.py 
-``` 
 
-## Connection
+
+
+## Hardware Connection
 To connect to the RI port is used 3.5mm mono jack. Tip is for data signal and sleeve is ground (GND). Data are sent via TTL logic. So it is easy to connect RI device to 5V MCU (Arduino). Just connect data signal to some output pin and connect GND between each other. In case of stereo jack, connect tip to DATA, sleeve and ring to GND.  That means for a Rasperry Pi 3 to put the tip to Pin 22 (GPIO_GEN6) GPIO25 (tx) and the shield to Pin 20 or another ground  (Gnd)
 
 
