@@ -5,25 +5,32 @@ If you have an Onyko Receiver or any other Onkyo hardware, you might find a 3.5m
 
 
 # Onkyo-RI-RasperryPi
-First of all ... I was myself confused wich approach to choose. There are Python approaches, but I found them kind of slow. This is why i foreked docbender's Onkyo-ri aproach which is in C++ - for use with RasperryPi using WiringPi.
+First of all ... I was myself confused wich approach to choose. There are Python approaches, but I found them kind of slow. (Wouldn't be a problem, just for setting another source, but when volume control only works when on a specific source - for me it's GAM when using my TX-SR-605 - then it gets quite annoying if every command needs 1s+ to run :D)
 
-https://github.com/ahaack/onkyo-rpi
+This is why i foreked [docbender's](https://github.com/ahaack/onkyo-rpi) Onkyo-ri aproach that was originally intended to be used with an Arduino but is is written in C++. I adopted it for use with RasperryPi using WiringPi and added a feature to concatenate commands ... so - if you already know on which source you were on - you can just jump back and forth when you want to change the volume (or switch off - what for me also only was possible when that source was selected) - if you are a C++er - MR's and suggestions welcome🙈 - i only bended things enough to be work. 
+
 
 ## First steps
 
 ## Software
 clone :)
+
 execute build with ./build  (I haven't worked with C++ for a while, MR for Makefile welcome :D ) 
 
 
 
 
 ## Hardware Connection
-To connect to the RI port is used 3.5mm mono jack. Tip is for data signal and sleeve is ground (GND). Data are sent via TTL logic. So it is easy to connect RI device to 5V MCU (Arduino). Just connect data signal to some output pin and connect GND between each other. In case of stereo jack, connect tip to DATA, sleeve and ring to GND.  That means for a Rasperry Pi 3 to put the tip to Pin 22 (GPIO_GEN6) GPIO25 (tx) and the shield to Pin 20 or another ground  (Gnd)
+You need to make yourself a fitting cable. Nothing too wild. Just a 3.5mm jack paired with a  10kOhms resistor sitting in paralell. 
+
+To connect to the RI port a 3.5mm mono jack is used. Tip is for data signal and sleeve is ground (GND). Data is sent via TTL logic. So it is easy to connect a RI device to 5V MCU (Rasperry Pi / [Arduino](https://github.com/ahaack/onkyo-rpi)). Just connect the data signal to some output pin and connect GND to a GND pin on the Pi. In case of stereo jack, connect tip to DATA, sleeve and ring to GND. 
+
+So for a Rasperry Pi 3/4 to put the tip to Pin 22 (GPIO_GEN6) GPIO25 (tx) and the shield to Pin 20 or another ground  (GND)
 
 
 
 ![Pi3 Pinout](./img/pi3pinout.svg)
+This schema only applies to RasperryPi's. Make sure 
 
 ## Protocol
 Protocol description could be found at:
@@ -36,8 +43,8 @@ Protocol is pretty simple for implementation. In one message is transfered 12 bi
 
 ## Library
 There are two Onkyo-RI library:
-* blocking - send() method blocks other program execution until whole command is sent. It takes up to 61 ms.
-* non-blocking - send() method only start command sending. The execution is handled by processing() function. This function must be called periodically with maximum 1 ms period. Function return bool value about sending status (true - data is being sent, false - nothing to sent/sending is done). Before the command is completely sent other functions can be executed. Library use internaly Arduino micros() function, so no other timer is not blocked.
+* blocking **Thats used in this library** - send() method blocks other program execution until whole command is sent. It takes up to 61 ms.
+* non-blocking **Ditn't use that here yet** - send() method only start command sending. The execution is handled by processing() function. This function must be called periodically with maximum 1 ms period. Function return bool value about sending status (true - data is being sent, false - nothing to sent/sending is done). Before the command is completely sent other functions can be executed. Library use internaly Arduino micros() function, so no other timer is not blocked.
 
 ## RI codes
 At mentioned sites are also listed codes for Onkyo devices. Unfortunnately none of the codes is not valid for my receiver TX-8020. To determine the valid codes I wrote a simple loop for Arduino (more below) that goes through the whole 12bit code range (0x0-0xFFF). Results are listed below commands.
@@ -231,14 +238,15 @@ Thanks to jimtng
 
 #### Notes on volume
 Volume control codes shown in the table are sent by the receiver out of its RI ports when adjusting the volume using a remote control (they can be found using an oscilloscope).
-However, the receiver will not react to these codes when they are sent from an external device, effectively making impossible to control its volume through RI signals.
+However, the receiver will not react to these codes when they are sent from an external device, effectively making impossible to control its volume through RI signals - Thats what was in docbenders readme - I think for most receivers it is in fact possible to control the volume - as long as they have a "Doc"-support for I-Pads. On my TX-SR 605 I can switch to GAM source, what enables me to send the Volume commands. Maybe your harware works different. Again - happy for input on that :) 
 
 ## Test program
-Program is located in repo folder Onkyo_test. It serves for check all codes (0x0 - 0xFFF) on target device in 500ms interval. For data line pin 10 is used as default. 
+Did't implement that yet. But I used one scan program in one of the python approaches to scan for my inputs. If you have harsware other then listet, you should do one, to see what your Onkyo Hw reacts to. 
 
-Actual checked code is sent as ASCII through serial port and can be displayed in terminal. For serial port 9600b/s is set.  Using terminal test program can be stopped, reset or user defined code could be used. 
+TODO: Add link to Python lib for scanner
 
-Terminal commands:
-* p - pause/run command sending
-* r - reset loop (program start from 0)
-* hexadecimal number - number in hexadecimal format represents code that user want to test on target device. From this code automatical procedure will continue.
+## On the Horizon
+I'd like to read from Onky Ri as-well.. so if anyone has tried that or has input on that - please write me or just continue writing and do MR :-) 
+
+## Sidenode 
+When this one works i want to make this availible to [NodeRed](https://github.com/dajuly20/node-red-contrib-onkyo-ri) (see my other repo for that )
