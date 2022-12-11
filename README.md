@@ -283,8 +283,7 @@ That doesn't seem to be true on every device. I **could** contol the volume on m
 The scan program (see further up) can be used to obtain the codes - it only requires a "bit" of parience. I think that receivers, that have a motor to turn the knob won't work. 
 
 ## Test program
-If none of the abouve codes works for you. You can walk through any possible code with the test program. (see above) 
-It serves for check all codes (0x000 - 0xFFF) on the target device in a 500ms interval. 
+If none of the abouve codes works for you. You can walk through any possible code with the test program. See: [ahaack/onkyo-RPI](https://github.com/ahaack/onkyo-RPI) 
 
 NOTE: As per my personal experience: For me testing went thought a testing mode, that made a loud sinus tone.. also it could increase the volume before.. so be careful not to wake anyone when you try this at nights :D 
 
