@@ -52,8 +52,6 @@ Just connect the data signal to some output pin and connect GND to a GND pin on 
 
 So for a Rasperry Pi 3 put the tip to Pin 22 (GPIO_GEN6) GPIO25 (tx) and the shield to Pin 20 or another ground  (GND)
 
-
-
 ![Pi3 Pinout](./img/pi3pinout.svg)
 This schema only applies to RasperryPi's. Make sure 
 
@@ -75,7 +73,7 @@ value about sending status (true - data is being sent, false - nothing to sent/s
  is completely sent other functions can be executed. Library use internaly Arduino micros() function, so no other timer is blocked.
 
 ## RI codes
-[RI Codes on seperate page](./RiCodes.md)
+### [RI Codes on seperate page](./RiCodes.md)
 ## Further reading 
 
 ## Protocol
