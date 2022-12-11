@@ -8,7 +8,6 @@ This is a fork of the C++ project [docbender/Onkyo-RI](https://github.com/docben
 that was made for the arduino platform, migrating it to the Rasperry Pi platform using
  Wiring Pi. 
 
-
 # What is OnkyoRi anyway? 
 If you have an Onyko Receiver or any other Onkyo hardware, you might find a 3.5mm jack plug on the back.
  When you connect it to another Onkyo device, you will be able to use the same remote for all devices. 
@@ -76,8 +75,7 @@ value about sending status (true - data is being sent, false - nothing to sent/s
  is completely sent other functions can be executed. Library use internaly Arduino micros() function, so no other timer is blocked.
 
 ## RI codes
-
-
+[RI Codes on seperate page](./RiCodes.md)
 ## Further reading 
 
 ## Protocol
