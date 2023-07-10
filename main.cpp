@@ -4,8 +4,18 @@
 #include <vector> 
 #include <chrono>
 #include <thread>
-#include "stdlib.h"
- 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <errno.h>
+// Maybe i can leave out some of those -Im just to lazy to try out
+
+
 using namespace std;
 
 std::vector<std::string> split(std::string str, std::string token){
@@ -34,15 +44,15 @@ bool file_exists (char *filename) {
 
 int main(int argc, char** argv) {
     
-    const lockfile = ".LOCK";
+    char* lockfile = "onkyoricli.LOCK";
     int fd;
     if (file_exists(lockfile)){
-        throw throw std::runtime_error("Application can not have multiple instances!!");
+        throw std::runtime_error("Application can not have multiple instances!!");
         return EXIT_FAILURE;
     }
     else{
-     fd = open(lockfile, O_CREAT | S_IRUSR | S_IWUSR);
-        if (fd == -1) {
+     
+        if (mknod(lockfile, S_IFREG|0666, 0) != 0) {
             std::runtime_error("Could not create LOCK file.");
             return EXIT_FAILURE;
         }
@@ -86,7 +96,7 @@ int main(int argc, char** argv) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(delay)); 
    }
 
-   std::remove(lockfile)
+   std::remove(lockfile);
    return EXIT_SUCCESS;
 
 }
