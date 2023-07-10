@@ -4,6 +4,7 @@
 #include <vector> 
 #include <chrono>
 #include <thread>
+#include "stdlib.h"
  
 using namespace std;
 
@@ -24,9 +25,31 @@ std::vector<std::string> split(std::string str, std::string token){
 }
 
 
+bool file_exists (char *filename) {
+  struct stat   buffer;   
+  return (stat (filename, &buffer) == 0);
+}
+
+
 
 int main(int argc, char** argv) {
-
+    
+    const lockfile = ".LOCK";
+    int fd;
+    if (file_exists(lockfile)){
+        throw throw std::runtime_error("Application can not have multiple instances!!");
+        return EXIT_FAILURE;
+    }
+    else{
+     fd = open(lockfile, O_CREAT | S_IRUSR | S_IWUSR);
+        if (fd == -1) {
+            std::runtime_error("Could not create LOCK file.");
+            return EXIT_FAILURE;
+        }
+        else {
+            close(fd);
+        }
+    }
 
     std::vector<string> args(argv + 1, argv + argc);
     string commands;
@@ -62,6 +85,9 @@ int main(int argc, char** argv) {
 	ori.send(commandInteger);	
 	std::this_thread::sleep_for(std::chrono::milliseconds(delay)); 
    }
+
+   std::remove(lockfile)
+   return EXIT_SUCCESS;
 
 }
 
