@@ -30,10 +30,16 @@ bool file_exists (char *filename) {
   return (stat (filename, &buffer) == 0);
 }
 
+void atexit_handler() 
+{
+    std::remove(lockfile);
+}
+ 
 
 
 int main(int argc, char** argv) {
-    
+    const int result_1 = std::atexit(atexit_handler);
+     std::at_quick_exit(atexit_handler);
     const lockfile = ".LOCK";
     int fd;
     if (file_exists(lockfile)){
@@ -86,7 +92,7 @@ int main(int argc, char** argv) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(delay)); 
    }
 
-   std::remove(lockfile)
+   atexit_handler();
    return EXIT_SUCCESS;
 
 }
