@@ -51,7 +51,7 @@ Just connect the data signal to some output pin and connect GND to a GND pin on 
  sleeve and ring to GND. 
 
 So for a Rasperry Pi 3 put the tip to Pin 22 (GPIO_GEN6) GPIO25 (tx) and the shield to Pin 20 or another ground  (GND)
-
+![wiringPi Pinout](./img/wiringPi.jpeg)
 ![Pi3 Pinout](./img/pi3pinout.svg)
 This schema only applies to RasperryPi's. Make sure 
 

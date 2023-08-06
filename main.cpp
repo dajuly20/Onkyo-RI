@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
     string lockfile = "onkyoricli.LOCK";
     int fd;
     if (file_exists(lockfile)){
-        throw std::runtime_error("Application can not have multiple instances!!");
+        throw std::runtime_error("Application can not have multiple instances!\nIf this error is permanent,run rm *.LOCK");
         return EXIT_FAILURE;
     }
     else{
@@ -71,7 +71,8 @@ int main(int argc, char** argv) {
     delay= 100; // in milliseconds 
     for (auto i = args.begin(); i != args.end(); ++i) {
         if (*i == "-h" || *i == "--help") {
-            cout << "Syntax: " << argv[0] << " -p <pin [6]> -c <command(s) [0x20(,0x21)]>" << endl;
+            cout << "Syntax: " << argv[0] << " -p <WiringPi-Pin [6]> -c <command(s) [0x20(,0x1A0)]>" << endl << endl << "See WiringPi PINs: https://pinout.xyz/pinout/wiringpi" << endl << "run gpio readall";
+            std::remove(lockfile.c_str());
             return 0;
         } else if (*i == "-c") {
 	    commands = *++i;
@@ -81,8 +82,6 @@ int main(int argc, char** argv) {
         }
     }
 
-
-   
  
  cout << "GPIO Pin is " << pin << endl;
 
