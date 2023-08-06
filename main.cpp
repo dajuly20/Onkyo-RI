@@ -71,7 +71,13 @@ int main(int argc, char** argv) {
     delay= 100; // in milliseconds 
     for (auto i = args.begin(); i != args.end(); ++i) {
         if (*i == "-h" || *i == "--help") {
-            cout << "Syntax: " << argv[0] << " -p <WiringPi-Pin [6]> -c <command(s) [0x20(,0x1A0)]>" << endl << endl << "See WiringPi PINs: https://pinout.xyz/pinout/wiringpi" << endl << "run gpio readall";
+            system("gpio readall");
+            
+            cout << "\033[1;31mUSE WIRING PI NUMBERS\033[0m\n" << endl << endl;
+            cout << "See WiringPi PINs: https://pinout.xyz/pinout/wiringpi" << endl << "OR: run gpio readall" << endl << "OR: view readme.MD / open img/wiringPi.jpeg" << endl;
+            cout << "Syntax: " << argv[0] << " -p <WiringPi-Pin [6]> -c <command(s) [0x20(,0x1A0)]>" << endl;
+            
+            
             std::remove(lockfile.c_str());
             return 0;
         } else if (*i == "-c") {
