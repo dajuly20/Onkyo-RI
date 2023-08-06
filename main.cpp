@@ -35,16 +35,16 @@ std::vector<std::string> split(std::string str, std::string token){
 }
 
 
-bool file_exists (char *filename) {
+bool file_exists (string filename) {
   struct stat   buffer;   
-  return (stat (filename, &buffer) == 0);
+  return (stat (filename.c_str(), &buffer) == 0);
 }
 
 
 
 int main(int argc, char** argv) {
     
-    char* lockfile = "onkyoricli.LOCK";
+    string lockfile = "onkyoricli.LOCK";
     int fd;
     if (file_exists(lockfile)){
         throw std::runtime_error("Application can not have multiple instances!!");
@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
     }
     else{
      
-        if (mknod(lockfile, S_IFREG|0666, 0) != 0) {
+        if (mknod(lockfile.c_str(), S_IFREG|0666, 0) != 0) {
             std::runtime_error("Could not create LOCK file.");
             return EXIT_FAILURE;
         }
@@ -96,7 +96,7 @@ int main(int argc, char** argv) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(delay)); 
    }
 
-   std::remove(lockfile);
+   std::remove(lockfile.c_str());
    return EXIT_SUCCESS;
 
 }
