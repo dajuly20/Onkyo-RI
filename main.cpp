@@ -13,9 +13,18 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
+#include <cstdlib>
+#include <signal.h>
+
+
+#define errExit(msg) do { perror(msg); exit(EXIT_FAILURE); \
+                               } while (0)
+
 // Maybe i can leave out some of those -Im just to lazy to try out
 
 using namespace std;
+const string lockfile = "onkyoricli.LOCK";
+
 
 std::vector<std::string> split(std::string str, std::string token)
 {
@@ -45,11 +54,6 @@ bool file_exists(string filename)
     return (stat(filename.c_str(), &buffer) == 0);
 }
 
-void releaseLock(string lockfile)
-{
-    std::remove(lockfile.c_str());
-}
-
 int printHelp(string location)
 {
     system("gpio readall");
@@ -71,7 +75,7 @@ int aquireLock(string lockfile)
     int fd;
     if (file_exists(lockfile))
     {
-        throw std::runtime_error("Application can not have multiple instances!\nIf this error is permanent,run rm *.LOCK");
+        throw std::runtime_error("Seems like the program is running already. Try again in a moment. If this is permanent it might be a DEADLOCK. To Remove Lock: rm  "+lockfile);
         return EXIT_FAILURE;
     }
     else
@@ -90,9 +94,26 @@ int aquireLock(string lockfile)
     return EXIT_SUCCESS;
 }
 
+
+void releaseLock(){
+  std::remove(lockfile.c_str());
+  cout << lockfile << " was removed!" << endl;
+}
+
+
+static void sigintHandler(int sig)
+{
+    releaseLock();
+    cout << "Caught SIGINT for cleanup"  << endl;
+    exit(1);
+    // errExit("signal SIGINT");
+}
+
+
 int main(int argc, char **argv)
 {
-
+    atexit(releaseLock);
+    signal(SIGINT, sigintHandler);
     std::vector<string> args(argv + 1, argv + argc);
     string commands;
     int pin;
@@ -121,7 +142,6 @@ int main(int argc, char **argv)
         }
     }
 
-    string lockfile = "onkyoricli.LOCK";
     if(aquireLock(lockfile) == EXIT_FAILURE) return EXIT_FAILURE;
     cout << "Using WiringPi Pin: " << pin << endl;
 
@@ -136,6 +156,6 @@ int main(int argc, char **argv)
         std::this_thread::sleep_for(std::chrono::milliseconds(delay));
     }
 
-    std::remove(lockfile.c_str());
+
     return EXIT_SUCCESS;
 }
