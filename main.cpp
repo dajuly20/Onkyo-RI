@@ -2,20 +2,14 @@
 #include "Onkyo_send_blocking/OnkyoRI.h"
 #include <iostream>
 #include <vector>
-#include <chrono>
 #include <thread>
-#include <stdio.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <fcntl.h>
 #include <unistd.h>
-#include <errno.h>
-#include <cstdlib>
 #include <signal.h>
-
+#include <sys/socket.h>
 
 #define errExit(msg) do { perror(msg); exit(EXIT_FAILURE); \
                                } while (0)
