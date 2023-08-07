@@ -2,18 +2,12 @@
 #include "Onkyo_send_blocking/OnkyoRI.h"
 #include <iostream>
 #include <vector>
-#include <chrono>
 #include <thread>
-#include <stdio.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <fcntl.h>
 #include <unistd.h>
-#include <errno.h>
-#include <cstdlib>
 #include <signal.h>
 
 using namespace std;
@@ -98,7 +92,6 @@ static void sigintHandler(int sig)
     releaseLock();
     cout << "Caught SIGINT for cleanup" << endl;
     exit(1);
-    // errExit("signal SIGINT");
 }
 
 int main(int argc, char **argv)

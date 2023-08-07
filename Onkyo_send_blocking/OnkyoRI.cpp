@@ -15,6 +15,7 @@
 
 #include <wiringPi.h>
 #include "OnkyoRI.h"
+#include <sys/socket.h>
 
 /// send command message to device
 ///
