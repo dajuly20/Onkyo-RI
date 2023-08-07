@@ -16,15 +16,8 @@
 #include <cstdlib>
 #include <signal.h>
 
-
-#define errExit(msg) do { perror(msg); exit(EXIT_FAILURE); \
-                               } while (0)
-
-// Maybe i can leave out some of those -Im just to lazy to try out
-
 using namespace std;
 const string lockfile = "onkyoricli.LOCK";
-
 
 std::vector<std::string> split(std::string str, std::string token)
 {
@@ -75,7 +68,7 @@ int aquireLock(string lockfile)
     int fd;
     if (file_exists(lockfile))
     {
-        throw std::runtime_error("Seems like the program is running already. Try again in a moment. If this is permanent it might be a DEADLOCK. To Remove Lock: rm  "+lockfile);
+        throw std::runtime_error("Seems like the program is running already. Try again in a moment. If this is permanent it might be a DEADLOCK. To Remove Lock: rm  " + lockfile);
         return EXIT_FAILURE;
     }
     else
@@ -94,21 +87,19 @@ int aquireLock(string lockfile)
     return EXIT_SUCCESS;
 }
 
-
-void releaseLock(){
-  std::remove(lockfile.c_str());
-  cout << lockfile << " was removed!" << endl;
+void releaseLock()
+{
+    std::remove(lockfile.c_str());
+    cout << lockfile << " was removed!" << endl;
 }
-
 
 static void sigintHandler(int sig)
 {
     releaseLock();
-    cout << "Caught SIGINT for cleanup"  << endl;
+    cout << "Caught SIGINT for cleanup" << endl;
     exit(1);
     // errExit("signal SIGINT");
 }
-
 
 int main(int argc, char **argv)
 {
@@ -142,7 +133,8 @@ int main(int argc, char **argv)
         }
     }
 
-    if(aquireLock(lockfile) == EXIT_FAILURE) return EXIT_FAILURE;
+    if (aquireLock(lockfile) == EXIT_FAILURE)
+        return EXIT_FAILURE;
     cout << "Using WiringPi Pin: " << pin << endl;
 
     wiringPiSetup();
@@ -155,7 +147,6 @@ int main(int argc, char **argv)
         ori.send(commandInteger);
         std::this_thread::sleep_for(std::chrono::milliseconds(delay));
     }
-
 
     return EXIT_SUCCESS;
 }
