@@ -113,8 +113,12 @@ int main(int argc, char **argv)
     {
         if (*i == "-c")
         {
-            commands = *++i;
-            commandsVector = split(commands, ",");
+            //cout << *i << " end is " << args.end() <<  endl;
+            ++i;
+            if(i != args.end()){
+                commands = *i;
+                commandsVector = split(commands, ",");
+            }
         }
         else if (*i == "-p")
         {
@@ -124,6 +128,14 @@ int main(int argc, char **argv)
         {
             return printHelp(argv[0]);
         }
+    }
+
+
+    if(commandsVector.size() == 0){
+        cout << "No command(s) specified" << endl;
+        return EXIT_FAILURE;
+    } else {
+        cout << commandsVector.size() << " gross" << endl;
     }
 
     if (aquireLock(lockfile) == EXIT_FAILURE)
