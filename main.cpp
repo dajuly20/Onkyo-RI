@@ -11,7 +11,7 @@
 #include <signal.h>
 
 using namespace std;
-const string lockfile = "onkyoricli.LOCK";
+const string lockfile = "/tmp/onkyoricli.LOCK";
 
 std::vector<std::string> split(std::string str, std::string token)
 {
@@ -62,7 +62,7 @@ int aquireLock(string lockfile)
     int fd;
     if (file_exists(lockfile))
     {
-        throw std::runtime_error("Seems like the program is running already. Try again in a moment. If this is permanent it might be a DEADLOCK. To Remove Lock: rm  " + lockfile);
+        throw std::runtime_error("Seems like the program is running already. Try again in a moment. If this is permanent it might be a DEADLOCK. To Remove Lock: 'rm  " + lockfile+"' ");
         return EXIT_FAILURE;
     }
     else
@@ -134,8 +134,6 @@ int main(int argc, char **argv)
     if(commandsVector.size() == 0){
         cout << "No command(s) specified" << endl;
         return EXIT_FAILURE;
-    } else {
-        cout << commandsVector.size() << " gross" << endl;
     }
 
     if (aquireLock(lockfile) == EXIT_FAILURE)
@@ -147,10 +145,12 @@ int main(int argc, char **argv)
 
     for (auto const &commandString : commandsVector)
     {
-        int commandInteger = std::stoi(commandString, nullptr, 0);
-        cout << "Sending command: " << commandInteger << endl;
-        ori.send(commandInteger);
-        std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+        if(!commandString.empty()){
+            int commandInteger = std::stoi(commandString, nullptr, 0);
+            cout << "Sending command: " << commandInteger << endl;
+            ori.send(commandInteger);
+            std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+        }
     }
 
     return EXIT_SUCCESS;
